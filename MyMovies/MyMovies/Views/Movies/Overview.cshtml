@@ -1,0 +1,22 @@
+﻿@model List<MyMovies.Models.Movie>
+
+@{
+    ViewBag.Title = "Overview";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        @foreach (var movie in Model)
+        {
+            <div class="card" style="width: 18rem;">
+                <img src="@movie.ImageUrl" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">@movie.Title</h5>
+                    <p class="card-text">@movie.Description</p>
+                    <a href="/Movies/Details/@movie.Id" class="btn btn-primary">See more...</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

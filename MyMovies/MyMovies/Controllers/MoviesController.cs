@@ -9,9 +9,11 @@ namespace MyMovies.Controllers
 {
     public class MoviesController : Controller
     {
-        public IActionResult Index()
+        public List<Movie> Movies { get; set; }
+
+        public MoviesController()
         {
-            var movie1 = new Movie() 
+            var movie1 = new Movie()
             {
                 Id = 1,
                 Title = "Batman",
@@ -21,15 +23,30 @@ namespace MyMovies.Controllers
 
             var movie2 = new Movie()
             {
-                Id = 1,
+                Id = 2,
                 Title = "Batman",
                 Duration = 120,
                 Description = "asadasdadasd",
             };
 
-            var movies = new List<Movie> { movie1, movie2 };
+            Movies = new List<Movie> { movie1, movie2 };
+        }
 
-            return View(movies);
+        public IActionResult Overview()
+        {
+            return View(Movies);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var movie = Movies.FirstOrDefault(x => x.Id == id);
+
+            if (movie == null)
+            {
+                return RedirectToAction("ErrorNotFound", "Info");
+            }
+
+            return View(movie);
         }
     }
 }
