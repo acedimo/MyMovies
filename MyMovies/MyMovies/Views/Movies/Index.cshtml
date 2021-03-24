@@ -1,0 +1,15 @@
+﻿@model List<MyMovies.Models.Movie>
+
+<DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title></title>
+    </head>
+    <body>
+        @foreach (var movie in @Model)
+        {
+            <h1>The title of the movie is: @movie.Title</h1>
+
+        }
+    </body>
+    </html>
