@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyMovies.Models;
+using MyMovies.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,44 +10,38 @@ namespace MyMovies.Controllers
 {
     public class MoviesController : Controller
     {
-        public List<Movie> Movies { get; set; }
+        private MoviesService _service { get; set; }
 
         public MoviesController()
         {
-            var movie1 = new Movie()
-            {
-                Id = 1,
-                Title = "Batman",
-                Duration = 120,
-                Description = "asadasdadasd",
-            };
-
-            var movie2 = new Movie()
-            {
-                Id = 2,
-                Title = "Batman",
-                Duration = 120,
-                Description = "asadasdadasd",
-            };
-
-            Movies = new List<Movie> { movie1, movie2 };
+            _service = new MoviesService();
         }
 
         public IActionResult Overview()
         {
-            return View(Movies);
+            var movies = _service.GetAllMovies();
+            return View(movies);
         }
 
         public IActionResult Details(int id)
         {
-            var movie = Movies.FirstOrDefault(x => x.Id == id);
-
-            if (movie == null)
+            try
             {
-                return RedirectToAction("ErrorNotFound", "Info");
-            }
+                var movie = _service.GetMovieById(id);
 
-            return View(movie);
+                if (movie == null)
+                {
+                    return RedirectToAction("ErrorNotFound", "Info");
+                }
+
+                return View(movie);
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("ErrorGeneral", "Info");
+            }
+            
         }
     }
 }
