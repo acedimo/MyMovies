@@ -7,11 +7,11 @@ using System.Text;
 
 namespace MyMovies.Repositories
 {
-    public class MoviesRepository : IMoviesRepository
+    public class MoviesMemoryRepository : IMoviesRepository
     {
         public List<Movie> Movies { get; set; }
 
-        public MoviesRepository()
+        public MoviesMemoryRepository()
         {
             var movie1 = new Movie()
             {
@@ -40,6 +40,11 @@ namespace MyMovies.Repositories
         public Movie GetById(int id)
         {
             return Movies.FirstOrDefault(x => x.Id == id);
+        }
+
+        public void Create(Movie movie)
+        {
+            throw new NotImplementedException();
         }
     }
 }

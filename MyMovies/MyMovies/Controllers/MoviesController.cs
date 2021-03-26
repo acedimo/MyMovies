@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyMovies.Models;
 using MyMovies.Services.Interfaces;
 using System;
 
@@ -37,6 +38,25 @@ namespace MyMovies.Controllers
 
                 return RedirectToAction("ErrorGeneral", "Info");
             }
+            
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Movie movie)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.CreateMovie(movie);
+                return RedirectToAction("Overview");
+            }
+
+            return View(movie);
             
         }
     }

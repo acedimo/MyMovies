@@ -8,5 +8,6 @@ namespace MyMovies.Repositories.Interfaces
         List<Movie> GetAll();
 
         Movie GetById(int id);
+        void Create(Movie movie);
     }
 }
