@@ -1,25 +1,24 @@
 ﻿using MyMovies.Models;
-using MyMovies.Repositories;
-using System;
+using MyMovies.Repositories.Interfaces;
+using MyMovies.Services.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MyMovies.Services
 {
-    public class MoviesService
+    public class MoviesService : IMoviesService
     {
-        private MoviesRepository _movieRepository { get; set; }
+        private IMoviesRepository _movieRepository { get; set; }
 
-        public MoviesService()
+        public MoviesService(IMoviesRepository moviesRepository)
         {
-            _movieRepository = new MoviesRepository();
+            _movieRepository = moviesRepository;
         }
         public List<Movie> GetAllMovies()
         {
             return _movieRepository.GetAll();
         }
 
-        public object GetMovieById(int id)
+        public Movie GetMovieById(int id)
         {
             return _movieRepository.GetById(id);
         }

@@ -1,4 +1,5 @@
 ﻿using MyMovies.Models;
+using MyMovies.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace MyMovies.Repositories
 {
-    public class MoviesRepository
+    public class MoviesRepository : IMoviesRepository
     {
         public List<Movie> Movies { get; set; }
 
@@ -36,7 +37,7 @@ namespace MyMovies.Repositories
             return Movies;
         }
 
-        public object GetById(int id)
+        public Movie GetById(int id)
         {
             return Movies.FirstOrDefault(x => x.Id == id);
         }

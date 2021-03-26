@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MyMovies.Repositories;
+using MyMovies.Repositories.Interfaces;
+using MyMovies.Services;
+using MyMovies.Services.Interfaces;
 
 namespace MyMovies
 {
@@ -24,6 +24,8 @@ namespace MyMovies
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddTransient<IMoviesService, MoviesService>();
+            services.AddTransient<IMoviesRepository, MoviesFileRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
