@@ -14,9 +14,9 @@ namespace MyMovies.Controllers
             _service = service;
         }
 
-        public IActionResult Overview()
+        public IActionResult Overview(string title)
         {
-            var movies = _service.GetAllMovies();
+            var movies = _service.GetMoviesByTitle(title);
             return View(movies);
         }
 

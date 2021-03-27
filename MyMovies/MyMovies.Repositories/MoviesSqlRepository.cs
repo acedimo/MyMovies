@@ -91,5 +91,38 @@ namespace MyMovies.Repositories
 
             return result;
         }
+
+        public List<Movie> GetByTitle(string title)
+        {
+
+            var result = new List<Movie>();
+
+            using (var cnn = new SqlConnection("Server=(localdb)\\MSSQLLocalDB;Database=MyMoviesSql;Trusted_Connection=True;"))
+            {
+
+                cnn.Open();
+
+                var query = $"select * from movies where title like @Title";
+                var cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@Title", $"%{title}%");
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+
+                    var movie = new Movie();
+
+                    movie.Id = reader.GetInt32(0);
+                    movie.Title = reader.GetString(1);
+                    movie.ImageUrl = reader.GetString(2);
+                    movie.Duration = reader.GetInt32(3);
+                    movie.Description = reader.GetString(4);
+
+                    result.Add(movie);
+                }
+            }
+
+            return result;
+        }
     }
 }
