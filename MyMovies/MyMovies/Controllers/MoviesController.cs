@@ -84,12 +84,17 @@ namespace MyMovies.Controllers
         {
             try
             {
-                _service.Delete(id);
-                return RedirectToAction("ManageOverview", new { SuccessMessage = "Movie deleted successfully" });
-            }
-            catch (NotFoundException ex)
-            {
-                return RedirectToAction("ManageOverview", new { ErrorMessage = ex.Message });
+                var response = _service.Delete(id);
+                if (response.IsSuccessful)
+                {
+                    return RedirectToAction("ManageOverview", new { SuccessMessage = "Movie deleted successfully" });
+
+                }
+                else
+                {
+                    return RedirectToAction("ManageOverview", new { ErrorMessage = response.Message });
+
+                }
             }
             catch(Exception)
             {
@@ -118,12 +123,18 @@ namespace MyMovies.Controllers
             {
                 try
                 {
-                    _service.Update(movie.ToModel());
-                    return RedirectToAction("ManageOverview", new { SuccessMessage = "Movie updated successfully" });
-                }
-                catch (NotFoundException ex)
-                {
-                    return RedirectToAction("ManageOverview", new { ErrorMessage = ex.Message });
+                    var response = _service.Update(movie.ToModel());
+
+                    if (response.IsSuccessful)
+                    {
+                        return RedirectToAction("ManageOverview", new { SuccessMessage = "Movie updated successfully" });
+
+                    }
+                    else
+                    {
+                        return RedirectToAction("ManageOverview", new { ErrorMessage = response.Message });
+
+                    }
                 }
                 catch (Exception)
                 {

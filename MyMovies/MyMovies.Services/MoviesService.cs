@@ -1,6 +1,7 @@
 ﻿using MyMovies.Common.Exceptions;
 using MyMovies.Models;
 using MyMovies.Repositories.Interfaces;
+using MyMovies.Services.DtoModels;
 using MyMovies.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -43,23 +44,29 @@ namespace MyMovies.Services
             }
         }
 
-        public void Delete(int id)
+        public StatusModel Delete(int id)
         {
+            var response = new StatusModel();
             var movie = _movieRepository.GetById(id);
 
             if (movie == null)
             {
-                throw new NotFoundException($"The movie with id {id} was not found");
+                response.IsSuccessful = false;
+                response.Message = $"The movie with id {id} was not found";
             }
             else
             {
                 _movieRepository.Delete(movie);
+                response.IsSuccessful = true;
             }
+
+            return response;
         }
 
-        public void Update(Movie movie)
+        public StatusModel Update(Movie movie)
         {
 
+            var response = new StatusModel();
             var updatedMovie = _movieRepository.GetById(movie.Id);
 
             if (updatedMovie != null)
@@ -72,13 +79,16 @@ namespace MyMovies.Services
                 updatedMovie.DateModified = DateTime.Now;
 
                 _movieRepository.Update(updatedMovie);
-
+                response.IsSuccessful = true;
             }
             else
             {
-                throw new NotFoundException($"The movie with id {movie.Id} was not found");
+                response.IsSuccessful = false;
+                response.Message = $"The movie with id {movie.Id} was not found";
 
             }
+
+            return response;
 
         }
     }
