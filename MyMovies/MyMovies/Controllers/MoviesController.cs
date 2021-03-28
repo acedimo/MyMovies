@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyMovies.Common.Exceptions;
+using MyMovies.Mappings;
 using MyMovies.Models;
 using MyMovies.Services.Interfaces;
+using MyMovies.ViewModels;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MyMovies.Controllers
 {
@@ -18,7 +22,10 @@ namespace MyMovies.Controllers
         public IActionResult Overview(string title)
         {
             var movies = _service.GetMoviesByTitle(title);
-            return View(movies);
+
+            var movieOverviewModels = movies.Select(x => x.ToOverviewModel()).ToList();
+
+            return View(movieOverviewModels);
         }
 
         public IActionResult ManageOverview(string errorMessage, string successMessage)
@@ -26,7 +33,10 @@ namespace MyMovies.Controllers
             ViewBag.ErrorMessage = errorMessage;
             ViewBag.SuccessMessage = successMessage;
             var movies = _service.GetAllMovies();
-            return View(movies);
+
+            var viewModels = movies.Select(x => x.ToManageOverviewModel()).ToList();
+
+            return View(viewModels);
         }
 
         public IActionResult Details(int id)
@@ -40,7 +50,7 @@ namespace MyMovies.Controllers
                     return RedirectToAction("ErrorNotFound", "Info");
                 }
 
-                return View(movie);
+                return View(movie.ToDetailsModel());
             }
             catch (Exception)
             {
@@ -57,11 +67,12 @@ namespace MyMovies.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Movie movie)
+        public IActionResult Create(MovieCreateModel movie)
         {
             if (ModelState.IsValid)
             {
-                _service.CreateMovie(movie);
+                var domainModel = movie.ToModel();
+                _service.CreateMovie(domainModel);
                 return RedirectToAction("ManageOverview", new { SuccessMessage = "Movie created successfully"});
             }
 
@@ -97,17 +108,17 @@ namespace MyMovies.Controllers
                 return RedirectToAction("ManageOverview", new { ErrorMessage = "Movie not found" });
             }
 
-            return View(movie);
+            return View(movie.ToUpdateModel());
         }
 
         [HttpPost]
-        public IActionResult Update(Movie movie)
+        public IActionResult Update(MovieUpdateModel movie)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _service.Update(movie);
+                    _service.Update(movie.ToModel());
                     return RedirectToAction("ManageOverview", new { SuccessMessage = "Movie updated successfully" });
                 }
                 catch (NotFoundException ex)
