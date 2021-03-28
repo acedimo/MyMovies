@@ -14,5 +14,6 @@ namespace MyMovies.Services.Interfaces
         Movie GetMovieById(int id);
         void CreateMovie(Movie movie);
         void Delete(int id);
+        void Update(Movie movie);
     }
 }

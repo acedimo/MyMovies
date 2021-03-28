@@ -10,5 +10,6 @@ namespace MyMovies.Repositories.Interfaces
         Movie GetById(int id);
         void Create(Movie movie);
         void Delete(Movie movie);
+        void Update(Movie movie);
     }
 }
