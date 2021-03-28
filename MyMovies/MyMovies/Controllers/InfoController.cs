@@ -22,5 +22,16 @@ namespace MyMovies.Controllers
         {
             return View();
         }
+
+        public IActionResult ActionNonSuccessfull(string message)
+        {
+            ViewBag.Message = message;
+            return View();
+        }
+
+        public IActionResult InternalError()
+        {
+            return View();
+        }
     }
 }

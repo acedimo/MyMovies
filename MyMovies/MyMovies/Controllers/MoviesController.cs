@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyMovies.Common.Exceptions;
 using MyMovies.Models;
 using MyMovies.Services.Interfaces;
 using System;
@@ -17,6 +18,14 @@ namespace MyMovies.Controllers
         public IActionResult Overview(string title)
         {
             var movies = _service.GetMoviesByTitle(title);
+            return View(movies);
+        }
+
+        public IActionResult ManageOverview(string errorMessage, string successMessage)
+        {
+            ViewBag.ErrorMessage = errorMessage;
+            ViewBag.SuccessMessage = successMessage;
+            var movies = _service.GetAllMovies();
             return View(movies);
         }
 
@@ -53,10 +62,28 @@ namespace MyMovies.Controllers
             if (ModelState.IsValid)
             {
                 _service.CreateMovie(movie);
-                return RedirectToAction("Overview");
+                return RedirectToAction("ManageOverview", new { SuccessMessage = "Movie created successfully"});
             }
 
             return View(movie);
+            
+        }
+
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _service.Delete(id);
+                return RedirectToAction("ManageOverview", new { SuccessMessage = "Movie deleted successfully" });
+            }
+            catch (NotFoundException ex)
+            {
+                return RedirectToAction("ManageOverview", new { ErrorMessage = ex.Message });
+            }
+            catch(Exception)
+            {
+                return RedirectToAction("InternalError", "Info");
+            }
             
         }
     }
