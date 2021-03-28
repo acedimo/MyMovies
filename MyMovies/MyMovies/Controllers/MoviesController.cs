@@ -21,6 +21,8 @@ namespace MyMovies.Controllers
 
         public IActionResult Overview(string title)
         {
+            var user = User;
+
             var movies = _service.GetMoviesByTitle(title);
 
             var movieOverviewModels = movies.Select(x => x.ToOverviewModel()).ToList();
