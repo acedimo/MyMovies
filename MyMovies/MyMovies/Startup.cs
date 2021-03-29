@@ -9,6 +9,7 @@ using MyMovies.Repositories;
 using MyMovies.Repositories.Interfaces;
 using MyMovies.Services;
 using MyMovies.Services.Interfaces;
+using System;
 
 namespace MyMovies
 {
@@ -26,11 +27,18 @@ namespace MyMovies
         {
             services.AddDbContext<MyMoviesDbContext>(x => x.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MyMovies;Trusted_Connection=True;"));
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                options =>
+                {
+                    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+                }
+             );
 
             services.AddControllersWithViews();
             services.AddTransient<IMoviesService, MoviesService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUsersService, UsersService>();
+
 
             services.AddTransient<IMoviesRepository, MoviesRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();

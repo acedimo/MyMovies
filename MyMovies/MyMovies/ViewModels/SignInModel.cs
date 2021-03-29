@@ -13,5 +13,7 @@ namespace MyMovies.ViewModels
         
         [Required]
         public string Password { get; set; }
+
+        public bool IsPersistent { get; set; }
     }
 }
