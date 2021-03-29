@@ -20,14 +20,22 @@ namespace MyMovies.Controllers
         }
 
         [HttpPost]
-        public IActionResult SignIn(SignInModel signInModel)
+        public IActionResult SignIn(SignInModel signInModel, string returnUrl)
         {
             if (ModelState.IsValid)
             {
                 var response = _authService.SignIn(signInModel.Username, signInModel.Password, signInModel.IsPersistent, HttpContext);
                 if (response.IsSuccessful)
                 {
-                    return RedirectToAction("Overview", "Movies");
+                    if (returnUrl == null)
+                    {
+                        return RedirectToAction("Overview", "Movies");
+
+                    }
+                    else
+                    {
+                        Redirect(returnUrl);
+                    }
 
                 }
                 else

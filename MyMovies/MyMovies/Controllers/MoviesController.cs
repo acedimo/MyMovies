@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyMovies.Common.Exceptions;
 using MyMovies.Mappings;
 using MyMovies.Models;
@@ -10,6 +11,7 @@ using System.Linq;
 
 namespace MyMovies.Controllers
 {
+    [Authorize]
     public class MoviesController : Controller
     {
         private IMoviesService _service { get; set; }
@@ -19,6 +21,7 @@ namespace MyMovies.Controllers
             _service = service;
         }
 
+        [AllowAnonymous]
         public IActionResult Overview(string title)
         {
             var user = User;
@@ -30,17 +33,7 @@ namespace MyMovies.Controllers
             return View(movieOverviewModels);
         }
 
-        public IActionResult ManageOverview(string errorMessage, string successMessage)
-        {
-            ViewBag.ErrorMessage = errorMessage;
-            ViewBag.SuccessMessage = successMessage;
-            var movies = _service.GetAllMovies();
-
-            var viewModels = movies.Select(x => x.ToManageOverviewModel()).ToList();
-
-            return View(viewModels);
-        }
-
+        [AllowAnonymous]
         public IActionResult Details(int id)
         {
             try
@@ -59,7 +52,18 @@ namespace MyMovies.Controllers
 
                 return RedirectToAction("ErrorGeneral", "Info");
             }
-            
+
+        }
+
+        public IActionResult ManageOverview(string errorMessage, string successMessage)
+        {
+            ViewBag.ErrorMessage = errorMessage;
+            ViewBag.SuccessMessage = successMessage;
+            var movies = _service.GetAllMovies();
+
+            var viewModels = movies.Select(x => x.ToManageOverviewModel()).ToList();
+
+            return View(viewModels);
         }
 
         [HttpGet]

@@ -31,6 +31,7 @@ namespace MyMovies
                 options =>
                 {
                     options.ExpireTimeSpan = TimeSpan.FromDays(30);
+                    options.LoginPath = "/Auth/SignIn";
                 }
              );
 
