@@ -13,6 +13,17 @@ namespace MyMovies.Repositories
             _context = context;
         }
 
+        public void Add(User newUser)
+        {
+            _context.Users.Add(newUser);
+            _context.SaveChanges();
+        }
+
+        public bool CheckIfExists(string username, string email)
+        {
+            return _context.Users.Any(x => x.Username == username || x.Email == email);
+        }
+
         public User GetById(int userId)
         {
             return _context.Users.FirstOrDefault(x => x.Id == userId);

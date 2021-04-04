@@ -27,5 +27,16 @@ namespace MyMovies.Mappings
                 Description = viewModel.Description
             };
         }
+
+        public static User ToModel(this SignUpModel user)
+        {
+            return new User()
+            {
+                Password = user.Password,
+                Username = user.Username,
+                Address = user.Address,
+                Email = user.Email
+            };
+        }
     }
 }

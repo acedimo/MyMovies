@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyMovies.Models
 {
@@ -14,5 +15,8 @@ namespace MyMovies.Models
         public string Address { get; set; }
 
         public string Email { get; set; }
+
+        [Required]
+        public DateTime DateCreated { get; set; }
     }
 }

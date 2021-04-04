@@ -4,11 +4,10 @@
     ViewBag.Title = "Overview";
 }
 
-<div class="row">
-    <div class="col-md-3">
+    <div class="row p-2">
         @foreach (var movie in Model)
         {
-            <div class="card" style="width: 18rem;">
+            <div class="card col-md-3 m-2" style="width: 18rem;">
                 <img src="@movie.ImageUrl" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">@movie.Title</h5>
@@ -18,5 +17,4 @@
             </div>
         }
     </div>
-</div>
 
