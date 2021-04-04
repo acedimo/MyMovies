@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyMovies.Models
@@ -22,5 +23,6 @@ namespace MyMovies.Models
         [Required]
         public DateTime DateCreated { get; set; }
         public DateTime? DateModified{ get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

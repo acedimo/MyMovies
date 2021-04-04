@@ -29,7 +29,7 @@ namespace MyMovies.Services
         public void CreateMovie(Movie movie)
         {
             movie.DateCreated = DateTime.Now;
-            _movieRepository.Create(movie);
+            _movieRepository.Add(movie);
         }
 
         public List<Movie> GetMoviesByTitle(string title)
