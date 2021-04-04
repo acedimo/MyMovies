@@ -14,3 +14,24 @@
 <h3>Duration: @Model.Duration</h3>
 
 <h2>Date created: @Model.DateCreated</h2>
+
+<hr />
+<h3>Comments</h3>
+<hr />
+
+@if (User.Identity.IsAuthenticated)
+{
+    <form asp-controller="Comments" asp-action="Add" method="post">
+        <input type="text" name="movieId" value="@Model.Id" hidden />
+        <div class="form-group">
+            <textarea type="text" name="comment" asp-for="Description" class="form-control" cols="20" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Comment</button>
+    </form>
+}
+
+
+@foreach (var comment in Model.Comments.OrderByDescending(x => x.DateCreated))
+{
+    <p>@comment.Message - @comment.Username - @comment.DateCreated</p>
+}

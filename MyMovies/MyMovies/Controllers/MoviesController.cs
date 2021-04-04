@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyMovies.Common.Exceptions;
 using MyMovies.Mappings;
-using MyMovies.Models;
 using MyMovies.Services.Interfaces;
 using MyMovies.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace MyMovies.Controllers
@@ -45,7 +42,9 @@ namespace MyMovies.Controllers
                     return RedirectToAction("ErrorNotFound", "Info");
                 }
 
-                return View(movie.ToDetailsModel());
+                var viewModel = movie.ToDetailsModel();
+
+                return View(viewModel);
             }
             catch (Exception)
             {

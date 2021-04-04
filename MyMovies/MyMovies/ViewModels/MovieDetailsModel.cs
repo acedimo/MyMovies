@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MyMovies.ViewModels
 {
     public class MovieDetailsModel
     {
+        public int Id { get; set; }
 
         public string Title { get; set; }
 
@@ -14,5 +16,7 @@ namespace MyMovies.ViewModels
         public string Description { get; set; }
 
         public DateTime DateCreated { get; set; }
+
+        public List<MovieCommentModel> Comments { get; set; }
     }
 }
