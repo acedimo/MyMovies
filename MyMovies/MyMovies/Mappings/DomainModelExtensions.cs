@@ -63,5 +63,15 @@ namespace MyMovies.Mappings
                 Email = user.Email
             };
         }
+
+        public static UserManageOverviewModel ToManageOverviewModel(this User user)
+        {
+            return new UserManageOverviewModel
+            {
+                Username = user.Username,
+                Id = user.Id,
+                IsAdmin = user.IsAdmin
+            };
+        }
     }
 }
