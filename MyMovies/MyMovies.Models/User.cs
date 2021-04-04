@@ -18,5 +18,8 @@ namespace MyMovies.Models
 
         [Required]
         public DateTime DateCreated { get; set; }
+
+        [Required]
+        public bool IsAdmin { get; set; }
     }
 }

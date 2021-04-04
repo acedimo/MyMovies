@@ -32,8 +32,17 @@ namespace MyMovies
                 {
                     options.ExpireTimeSpan = TimeSpan.FromDays(30);
                     options.LoginPath = "/Auth/SignIn";
+                    options.AccessDeniedPath = "/Auth/AccessDenied";
                 }
              );
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IsAdmin", policy =>
+                {
+                    policy.RequireClaim("IsAdmin", "True");
+                });
+            });
 
             services.AddControllersWithViews();
             services.AddTransient<IMoviesService, MoviesService>();
