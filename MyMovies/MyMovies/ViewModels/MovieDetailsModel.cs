@@ -16,6 +16,7 @@ namespace MyMovies.ViewModels
         public string Description { get; set; }
 
         public DateTime DateCreated { get; set; }
+        public int Views { get; set; }
 
         public List<MovieCommentModel> Comments { get; set; }
     }

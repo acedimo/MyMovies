@@ -25,9 +25,13 @@ namespace MyMovies.Controllers
 
             var movies = _service.GetMoviesByTitle(title);
 
+            var overviewDataModel = new MovieOverviewDataModel();
+
             var movieOverviewModels = movies.Select(x => x.ToOverviewModel()).ToList();
 
-            return View(movieOverviewModels);
+            overviewDataModel.OverviewMovies = movieOverviewModels;
+
+            return View(overviewDataModel);
         }
 
         [AllowAnonymous]
@@ -35,7 +39,7 @@ namespace MyMovies.Controllers
         {
             try
             {
-                var movie = _service.GetMovieById(id);
+                var movie = _service.GetMovieDetails(id);
 
                 if (movie == null)
                 {

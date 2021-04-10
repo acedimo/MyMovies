@@ -13,7 +13,8 @@ namespace MyMovies.Mappings
                 Id = movie.Id,
                 Title = movie.Title,
                 ImageUrl = movie.ImageUrl,
-                Description = movie.Description
+                Description = movie.Description,
+                Views = movie.Views
 
             };
 
@@ -40,6 +41,7 @@ namespace MyMovies.Mappings
                 Duration = movie.Duration,
                 Description = movie.Description,
                 DateCreated = movie.DateCreated,
+                Views = movie.Views,
                 Comments = movie.Comments.Select(x => x.ToCommentModel()).ToList()
 
             };

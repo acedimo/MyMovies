@@ -23,6 +23,8 @@ namespace MyMovies.Models
         [Required]
         public DateTime DateCreated { get; set; }
         public DateTime? DateModified{ get; set; }
+
+        public int Views { get; set; }
         public List<Comment> Comments { get; set; }
     }
 }
