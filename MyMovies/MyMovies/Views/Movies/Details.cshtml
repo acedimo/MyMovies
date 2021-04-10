@@ -4,6 +4,19 @@
     ViewBag.Title = "Details";
 }
 
+@section Styles{
+    <style>
+        .comment {
+            width: 300px;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+    </style>
+}
+
+
 <h1>@Model.Title</h1>
 
 <img src="@Model.ImageUrl" alt="" />
@@ -21,10 +34,10 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <form asp-controller="Comments" asp-action="Add" method="post">
+    <form asp-controller="Comments" asp-action="Add" method="post" onsubmit="return validateForm()">
         <input type="text" name="movieId" value="@Model.Id" hidden />
         <div class="form-group">
-            <textarea type="text" name="comment" asp-for="Description" class="form-control" cols="20" rows="5" required></textarea>
+            <textarea type="text" id="comment" name="comment" asp-for="Description" class="form-control" cols="20" rows="5" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Comment</button>
     </form>
@@ -33,5 +46,13 @@
 
 @foreach (var comment in Model.Comments.OrderByDescending(x => x.DateCreated))
 {
-    <p>@comment.Message - @comment.Username - @comment.DateCreated</p>
+    <div class="comment">
+        <p>@comment.Message</p>
+        <p>User: @comment.Username</p>
+        <p>Date Created: @comment.DateCreated</p>
+    </div>
+}
+
+@section Scripts{ 
+    <script src="~/js/validator.js"></script>
 }
