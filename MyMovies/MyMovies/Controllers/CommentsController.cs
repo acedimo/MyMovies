@@ -32,5 +32,25 @@ namespace MyMovies.Controllers
                 return RedirectToAction("ActionNonSuccessfull", "Info", new { Message = response.Message });
             }
         }
+
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            var comment = _commentsService.GetById(id);
+
+            if (comment == null)
+            {
+                return RedirectToAction("ErrorNotFound", "Info");
+            }
+
+            if (comment.UserId != int.Parse(User.FindFirst("Id").Value))
+            {
+                return RedirectToAction("AccessDenied", "Auth");
+            }
+
+            _commentsService.Delete(comment);
+
+            return RedirectToAction("Details", "Movies", new { id = comment.MovieId });
+        }
     }
 }
