@@ -89,5 +89,16 @@ namespace MyMovies.Mappings
                 IsAdmin = user.IsAdmin
             };
         }
+
+        public static MovieSideBarModel ToMovieSideBarModel(this Movie movie)
+        {
+            return new MovieSideBarModel
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                DateCreated = movie.DateCreated,
+                Views = movie.Views
+            };
+        }
     }
 }

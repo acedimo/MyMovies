@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyMovies.Mappings;
+using MyMovies.Services;
 using MyMovies.Services.Interfaces;
 using MyMovies.ViewModels;
 using System;
@@ -12,10 +13,13 @@ namespace MyMovies.Controllers
     public class MoviesController : Controller
     {
         private IMoviesService _service { get; set; }
+        private ISidebarService _sidebarService { get; set; }
 
-        public MoviesController(IMoviesService service)
+
+        public MoviesController(IMoviesService service, ISidebarService sidebarService)
         {
             _service = service;
+            _sidebarService = sidebarService;
         }
 
         [AllowAnonymous]
@@ -28,8 +32,9 @@ namespace MyMovies.Controllers
             var overviewDataModel = new MovieOverviewDataModel();
 
             var movieOverviewModels = movies.Select(x => x.ToOverviewModel()).ToList();
-
             overviewDataModel.OverviewMovies = movieOverviewModels;
+
+            overviewDataModel.SidebarData = _sidebarService.GetSidebarData();
 
             return View(overviewDataModel);
         }
@@ -46,9 +51,14 @@ namespace MyMovies.Controllers
                     return RedirectToAction("ErrorNotFound", "Info");
                 }
 
-                var viewModel = movie.ToDetailsModel();
+                var movieDetailsDataModel = new MovieDetailsDataModel();
 
-                return View(viewModel);
+                movieDetailsDataModel.MovieDetails = movie.ToDetailsModel();
+
+                movieDetailsDataModel.SideBarData = _sidebarService.GetSidebarData();
+
+
+                return View(movieDetailsDataModel);
             }
             catch (Exception)
             {
