@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyMovies.Common.Options;
 using MyMovies.Repositories;
 using MyMovies.Repositories.Interfaces;
 using MyMovies.Services;
@@ -25,12 +26,12 @@ namespace MyMovies
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<MyMoviesDbContext>(x => x.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MyMovies;Trusted_Connection=True;"));
+            services.AddDbContext<MyMoviesDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("MyMovies")));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                 options =>
                 {
-                    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+                    options.ExpireTimeSpan = TimeSpan.FromDays(int.Parse(Configuration["CookieExpirationPeriod"]));
                     options.LoginPath = "/Auth/SignIn";
                     options.AccessDeniedPath = "/Auth/AccessDenied";
                 }
@@ -43,6 +44,8 @@ namespace MyMovies
                     policy.RequireClaim("IsAdmin", "True");
                 });
             });
+
+            services.Configure<SidebarConfig>(Configuration.GetSection("SidebarConfig"));
 
             services.AddControllersWithViews();
             services.AddTransient<IMoviesService, MoviesService>();
