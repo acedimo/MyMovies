@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyMovies.Repositories;
 
 namespace MyMovies.Repositories.Migrations
 {
     [DbContext(typeof(MyMoviesDbContext))]
-    partial class MyMoviesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210417141343_AddedMovieGenreTable")]
+    partial class AddedMovieGenreTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,7 +73,7 @@ namespace MyMovies.Repositories.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MovieGenreId")
+                    b.Property<int?>("MovieGenreId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -154,9 +156,7 @@ namespace MyMovies.Repositories.Migrations
                 {
                     b.HasOne("MyMovies.Models.MovieGenre", "MovieGenre")
                         .WithMany("Movies")
-                        .HasForeignKey("MovieGenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MovieGenreId");
                 });
 #pragma warning restore 612, 618
         }
