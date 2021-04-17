@@ -1,0 +1,13 @@
+{"Type":0,"Message":"{\"Requestpath\":\"/\"}","DateCreated":"2021-04-17T15:07:38.3387161+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"200\"}","DateCreated":"2021-04-17T15:07:42.4729188+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"/Movies/ManageOverview\"}","DateCreated":"2021-04-17T15:07:46.4625312+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"200\"}","DateCreated":"2021-04-17T15:07:46.5589457+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"/Movies/Create\"}","DateCreated":"2021-04-17T15:07:47.5507357+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"200\"}","DateCreated":"2021-04-17T15:07:47.7677865+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"/Movies/Create\"}","DateCreated":"2021-04-17T15:07:55.7132465+02:00"}
+{"Type":0,"Message":"User with id Id: 3 created recipe Nobody","DateCreated":"2021-04-17T15:07:56.3522178+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"302\"}","DateCreated":"2021-04-17T15:07:56.3623935+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"/Movies/ManageOverview\"}","DateCreated":"2021-04-17T15:07:56.3778424+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"200\"}","DateCreated":"2021-04-17T15:07:56.3980106+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"/Movies/Overview\"}","DateCreated":"2021-04-17T15:07:58.6261819+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"200\"}","DateCreated":"2021-04-17T15:07:58.662642+02:00"}

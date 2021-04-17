@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyMovies.Common.Models;
+using MyMovies.Common.Services;
 using MyMovies.Mappings;
 using MyMovies.Services;
 using MyMovies.Services.Interfaces;
@@ -15,11 +17,13 @@ namespace MyMovies.Controllers
         private IMoviesService _service { get; set; }
         private ISidebarService _sidebarService { get; set; }
 
+        private readonly ILogService _logService;
 
-        public MoviesController(IMoviesService service, ISidebarService sidebarService)
+        public MoviesController(IMoviesService service, ISidebarService sidebarService, ILogService logService)
         {
             _service = service;
             _sidebarService = sidebarService;
+            _logService = logService;
         }
 
         [AllowAnonymous]
@@ -92,6 +96,11 @@ namespace MyMovies.Controllers
             {
                 var domainModel = movie.ToModel();
                 _service.CreateMovie(domainModel);
+
+                var userId = User.FindFirst("Id");
+                var logData = new LogData() { Type = LogType.Info, DateCreated = DateTime.Now, Message = $"User with id {userId} created recipe {movie.Title}" };
+                _logService.Log(logData);
+
                 return RedirectToAction("ManageOverview", new { SuccessMessage = "Movie created successfully"});
             }
 
