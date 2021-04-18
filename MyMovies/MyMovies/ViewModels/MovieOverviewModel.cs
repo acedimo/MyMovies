@@ -11,5 +11,7 @@
         public string Description { get; set; }
 
         public int Views { get; set; }
+
+        public string MovieGenre { get; set; }
     }
 }

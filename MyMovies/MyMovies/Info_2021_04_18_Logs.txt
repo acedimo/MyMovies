@@ -1,0 +1,15 @@
+{"Type":0,"Message":"{\"Requestpath\":\"/\"}","DateCreated":"2021-04-18T17:54:43.8235317+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"200\"}","DateCreated":"2021-04-18T17:54:51.2962727+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"/Movies/ManageOverview\"}","DateCreated":"2021-04-18T17:55:09.1886627+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"200\"}","DateCreated":"2021-04-18T17:55:09.2756215+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"/Movies/Create\"}","DateCreated":"2021-04-18T17:55:10.5435699+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"200\"}","DateCreated":"2021-04-18T17:55:10.824883+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"/Movies/Overview\"}","DateCreated":"2021-04-18T17:55:26.4254048+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"200\"}","DateCreated":"2021-04-18T17:55:26.4475545+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"/Movies/ManageOverview\"}","DateCreated":"2021-04-18T17:55:33.7544195+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"200\"}","DateCreated":"2021-04-18T17:55:33.7738041+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"/Movies/Create\"}","DateCreated":"2021-04-18T17:55:35.2544988+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"200\"}","DateCreated":"2021-04-18T17:55:35.2729546+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"/Movies/Create\"}","DateCreated":"2021-04-18T17:55:52.8662+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"/\"}","DateCreated":"2021-04-18T18:21:55.5628054+02:00"}
+{"Type":0,"Message":"{\"Requestpath\":\"200\"}","DateCreated":"2021-04-18T18:22:00.6313905+02:00"}

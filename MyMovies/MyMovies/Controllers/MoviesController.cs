@@ -14,15 +14,21 @@ namespace MyMovies.Controllers
     [Authorize(Policy = "IsAdmin")]
     public class MoviesController : Controller
     {
-        private IMoviesService _service { get; set; }
+        private IMoviesService _moviesService { get; set; }
         private ISidebarService _sidebarService { get; set; }
 
+        private readonly IMovieGenresService _movieGenresService;
         private readonly ILogService _logService;
 
-        public MoviesController(IMoviesService service, ISidebarService sidebarService, ILogService logService)
+        public MoviesController(
+            IMoviesService moviesService,
+            ISidebarService sidebarService,
+            IMovieGenresService movieGenresService,
+            ILogService logService)
         {
-            _service = service;
+            _moviesService = moviesService;
             _sidebarService = sidebarService;
+            _movieGenresService = movieGenresService;
             _logService = logService;
         }
 
@@ -31,7 +37,7 @@ namespace MyMovies.Controllers
         {
             var user = User;
 
-            var movies = _service.GetMoviesByTitle(title);
+            var movies = _moviesService.GetMoviesWithFilters(title);
 
             var overviewDataModel = new MovieOverviewDataModel();
 
@@ -48,7 +54,7 @@ namespace MyMovies.Controllers
         {
             try
             {
-                var movie = _service.GetMovieDetails(id);
+                var movie = _moviesService.GetMovieDetails(id);
 
                 if (movie == null)
                 {
@@ -76,7 +82,7 @@ namespace MyMovies.Controllers
         {
             ViewBag.ErrorMessage = errorMessage;
             ViewBag.SuccessMessage = successMessage;
-            var movies = _service.GetAllMovies();
+            var movies = _moviesService.GetAllMovies();
 
             var viewModels = movies.Select(x => x.ToManageOverviewModel()).ToList();
 
@@ -86,7 +92,13 @@ namespace MyMovies.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var movieGenres = _movieGenresService.GetAll();
+            var viewModels = movieGenres.Select(x => x.ToMovieGenreModel()).ToList();
+
+            var viewModel = new MovieCreateModel();
+            viewModel.MovieGenres = viewModels;
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -95,14 +107,28 @@ namespace MyMovies.Controllers
             if (ModelState.IsValid)
             {
                 var domainModel = movie.ToModel();
-                _service.CreateMovie(domainModel);
+                var response = _moviesService.CreateMovie(domainModel);
 
-                var userId = User.FindFirst("Id");
-                var logData = new LogData() { Type = LogType.Info, DateCreated = DateTime.Now, Message = $"User with id {userId} created recipe {movie.Title}" };
-                _logService.Log(logData);
+                if (response.IsSuccessful)
+                {
+                    var userId = User.FindFirst("Id");
+                    var logData = new LogData() { Type = LogType.Info, DateCreated = DateTime.Now, Message = $"User with id {userId} created recipe {movie.Title}" };
+                    _logService.Log(logData);
 
-                return RedirectToAction("ManageOverview", new { SuccessMessage = "Movie created successfully"});
+                    return RedirectToAction("ManageOverview", new { SuccessMessage = "Movie created successfully" });
+                }
+                else
+                {
+                    return RedirectToAction("ManageOverview", new { ErrorMessage = response.Message });
+                }
+
+                
             }
+
+            var movieGenres = _movieGenresService.GetAll();
+            var viewModels = movieGenres.Select(x => x.ToMovieGenreModel()).ToList();
+
+            movie.MovieGenres = viewModels;
 
             return View(movie);
             
@@ -112,7 +138,7 @@ namespace MyMovies.Controllers
         {
             try
             {
-                var response = _service.Delete(id);
+                var response = _moviesService.Delete(id);
                 if (response.IsSuccessful)
                 {
                     return RedirectToAction("ManageOverview", new { SuccessMessage = "Movie deleted successfully" });
@@ -134,14 +160,21 @@ namespace MyMovies.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var movie = _service.GetMovieById(id);
+            var movie = _moviesService.GetMovieById(id);
 
             if (movie == null)
             {
                 return RedirectToAction("ManageOverview", new { ErrorMessage = "Movie not found" });
             }
 
-            return View(movie.ToUpdateModel());
+            var viewModel = movie.ToUpdateModel();
+
+            var movieGenres = _movieGenresService.GetAll();
+            var viewModels = movieGenres.Select(x => x.ToMovieGenreModel()).ToList();
+
+            viewModel.MovieGenres = viewModels;
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -151,7 +184,7 @@ namespace MyMovies.Controllers
             {
                 try
                 {
-                    var response = _service.Update(movie.ToModel());
+                    var response = _moviesService.Update(movie.ToModel());
 
                     if (response.IsSuccessful)
                     {

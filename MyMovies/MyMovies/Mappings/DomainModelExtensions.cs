@@ -14,7 +14,8 @@ namespace MyMovies.Mappings
                 Title = movie.Title,
                 ImageUrl = movie.ImageUrl,
                 Description = movie.Description,
-                Views = movie.Views
+                Views = movie.Views,
+                MovieGenre = movie.MovieGenre.Name
 
             };
 
@@ -26,6 +27,17 @@ namespace MyMovies.Mappings
             {
                 Id = movie.Id,
                 Title = movie.Title,
+
+            };
+
+        }
+
+        public static MovieGenreModel ToMovieGenreModel(this MovieGenre movieGenre)
+        {
+            return new MovieGenreModel()
+            {
+                Id = movieGenre.Id,
+                Name = movieGenre.Name
 
             };
 
@@ -66,7 +78,8 @@ namespace MyMovies.Mappings
                 Title = movie.Title,
                 ImageUrl = movie.ImageUrl,
                 Duration = movie.Duration,
-                Description = movie.Description
+                Description = movie.Description,
+                MovieGenreId = movie.MovieGenreId
             };
         }
 

@@ -10,10 +10,10 @@ namespace MyMovies.Services.Interfaces
     {
         List<Movie> GetAllMovies();
 
-        List<Movie> GetMoviesByTitle(string title);
+        List<Movie> GetMoviesWithFilters(string title);
 
         Movie GetMovieById(int id);
-        void CreateMovie(Movie movie);
+        StatusModel CreateMovie(Movie movie);
         StatusModel Delete(int id);
         StatusModel Update(Movie movie);
         public Movie GetMovieDetails(int id);

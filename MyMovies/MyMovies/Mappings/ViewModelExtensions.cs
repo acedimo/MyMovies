@@ -12,7 +12,8 @@ namespace MyMovies.Mappings
                 Title = viewModel.Title,
                 ImageUrl = viewModel.ImageUrl,
                 Duration = viewModel.Duration,
-                Description = viewModel.Description
+                Description = viewModel.Description,
+                MovieGenreId = viewModel.MovieGenreId
             };
         }
 
@@ -24,7 +25,8 @@ namespace MyMovies.Mappings
                 Title = viewModel.Title,
                 ImageUrl = viewModel.ImageUrl,
                 Duration = viewModel.Duration,
-                Description = viewModel.Description
+                Description = viewModel.Description,
+                MovieGenreId = viewModel.MovieGenreId
             };
         }
 

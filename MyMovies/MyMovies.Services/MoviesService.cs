@@ -10,11 +10,14 @@ namespace MyMovies.Services
 {
     public class MoviesService : IMoviesService
     {
+        private readonly IMovieGenresService _movieGenresService;
+
         private IMoviesRepository _movieRepository { get; set; }
 
-        public MoviesService(IMoviesRepository moviesRepository)
+        public MoviesService(IMoviesRepository moviesRepository, IMovieGenresService movieGenresService)
         {
             _movieRepository = moviesRepository;
+            _movieGenresService = movieGenresService;
         }
         public List<Movie> GetAllMovies()
         {
@@ -42,22 +45,26 @@ namespace MyMovies.Services
             return movie;
         }
 
-        public void CreateMovie(Movie movie)
+        public StatusModel CreateMovie(Movie movie)
         {
+            var response = new StatusModel();
+
+            if (!_movieGenresService.CheckIfExists(movie.MovieGenreId))
+            {
+                response.IsSuccessful = false;
+                response.Message = $"Movie genre with id {movie.MovieGenreId} does not exist.";
+                return response;
+            }
+
             movie.DateCreated = DateTime.Now;
             _movieRepository.Add(movie);
+
+            return response;
         }
 
-        public List<Movie> GetMoviesByTitle(string title)
+        public List<Movie> GetMoviesWithFilters(string title)
         {
-            if (title == null)
-            {
-                return _movieRepository.GetAll();
-            }
-            else
-            {
-                return _movieRepository.GetByTitle(title);
-            }
+            return _movieRepository.GetMoviesWithFilters(title);
         }
 
         public StatusModel Delete(int id)
@@ -92,6 +99,7 @@ namespace MyMovies.Services
                 updatedMovie.Duration = movie.Duration;
                 updatedMovie.Description = movie.Description;
                 updatedMovie.DateModified = DateTime.Now;
+                updatedMovie.MovieGenreId = movie.MovieGenreId;
 
                 _movieRepository.Update(updatedMovie);
             }

@@ -12,10 +12,16 @@ namespace MyMovies.Repositories
         public MoviesRepository(MyMoviesDbContext context) : base(context)
         {}
 
-        public List<Movie> GetByTitle(string title)
+        public List<Movie> GetMoviesWithFilters(string title)
         {
-            return _context.Movies.Where(x => x.Title.Contains(title)).ToList();
-            
+            var query = _context.Movies.Include(x => x.MovieGenre);
+
+            if (title != null)
+            {
+                query.Where(x => x.Title.Contains(title));
+            }
+
+            return query.ToList();
         }
 
         public override Movie GetById(int entityId)
