@@ -57,12 +57,17 @@ namespace MyMovies
             services.AddTransient<ISidebarService, SidebarService>();
             services.AddTransient<ILogService, LogService>();
             services.AddTransient<IMovieGenresService, MovieGenresService>();
-            services.AddTransient<IMovieGenresRepository, MovieGenresRepository>();
+            services.AddTransient<IMovieLikesService, MovieLikesService>();
+
 
 
             services.AddTransient<IMoviesRepository, MoviesRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddTransient<ICommentsRepository, CommentsRepository>();
+            services.AddTransient<IMovieGenresRepository, MovieGenresRepository>();
+            services.AddTransient<IMovieLikesRepository, MovieLikesRepository>();
+
+
 
         }
 

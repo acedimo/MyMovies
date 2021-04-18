@@ -15,7 +15,19 @@ namespace MyMovies.Mappings
                 ImageUrl = movie.ImageUrl,
                 Description = movie.Description,
                 Views = movie.Views,
-                MovieGenre = movie.MovieGenre.Name
+                MovieGenre = movie.MovieGenre.Name,
+                MovieLikes = movie.MovieLikes.Select(x => x.ToMovieLikeModel()).ToList()
+            };
+
+        }
+
+        public static MovieLikeModel ToMovieLikeModel(this MovieLike movieLike)
+        {
+            return new MovieLikeModel()
+            {
+                Id = movieLike.Id,
+                MovieId = movieLike.MovieId,
+                UserId = movieLike.UserId
 
             };
 
@@ -26,7 +38,7 @@ namespace MyMovies.Mappings
             return new MovieManageOverviewModel()
             {
                 Id = movie.Id,
-                Title = movie.Title,
+                Title = movie.Title
 
             };
 

@@ -20,6 +20,23 @@
                     <div class="card-body">
                         <h5 class="card-title">@movie.Title - @movie.MovieGenre</h5>
                         <p class="card-text">Views: @movie.Views</p>
+                        <p class="card-text">Likes: @movie.MovieLikes.Count()</p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (movie.MovieLikes.Any(x => x.UserId == int.Parse(User.FindFirst("Id").Value)))
+                            {
+                                <a asp-controller="MovieLikes" asp-action="Remove" asp-route-movieId="@movie.Id">
+                                    <i class="fas fa-thumbs-up"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-controller="MovieLikes" asp-action="Add" asp-route-movieId="@movie.Id">
+                                    <i class="far fa-thumbs-up"></i>
+                                </a>
+                            }
+
+                        }
                         <div class="card-text recipeDescription">@movie.Description</div>
                         <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-primary">See more...</a>
                     </div>

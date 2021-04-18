@@ -14,7 +14,7 @@ namespace MyMovies.Repositories
 
         public List<Movie> GetMoviesWithFilters(string title)
         {
-            var query = _context.Movies.Include(x => x.MovieGenre);
+            var query = _context.Movies.Include(x => x.MovieGenre).Include(x => x.MovieLikes);
 
             if (title != null)
             {

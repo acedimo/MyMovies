@@ -23,6 +23,8 @@ namespace MyMovies.Models
         [Required]
         public bool IsAdmin { get; set; }
         public List<Comment> Comments { get; set; }
+        public List<MovieLike> MovieLikes { get; set; }
+
 
     }
 }
